@@ -46,19 +46,32 @@ breaks <- seq(from = min_val, to = max_val, by = 20)
 cols <- rev(c("#276604", "#ddb746", "#ffd3af", "#ffeadb"))
 texture <- colorRampPalette(cols)(256)
 
-# GGPLOT2
-p <- ggplot(forest_cover_df) +
-  geom_tile(aes(x = x, y = y, fill = percent_cover)) +
-#   geom_sf(data = country_borders, fill = "transparent",
-#     color = "black", size = .2)
-  scale_fill_gradientn(
-    name = "% of area",
-    colours = texture,
-    breaks = breaks,
-    limits = limits
-  ) +
-  coord_sf(crs = crs_longlat) +
-  guides(
+
+
+
+
+
+
+
+
+
+# 8. GGPLOT2
+#-----------
+
+p <- ggplot2::ggplot(forest_cover_df) +
+  ggplot2::geom_raster(ggplot2::aes(x = x, y = y, fill = percent_cover)) +
+  ggplot2::scale_fill_gradientn(name = "% of area", colours = texture, breaks = breaks, limits = limits) + #nolint
+  ggplot2::coord_sf(crs = crs) +
+  ggplot2::guides(fill = guide_legend(direction = "horizontal", keywidth = unit(5, units == "mm"), keyheight = unit(1.25, units = "mm"))) +  #nolint
+
+
+
+
+
+
+
+
+p <- guides(
     fill = guide_legend(
         direction = "horizontal",
         keyheight = unit(1.25, units = "mm"),
@@ -101,9 +114,9 @@ h <- nrow(forest_cover_map)
 rayshader::plot_gg(
   ggobj = p,
   multicore = TRUE,
-  width = 1,
-  height = 1,
-  windowsize = c(1400, 900),
+  width = w * 7 / h,
+  height = 7,
+  windowsize = c(1280, 720),
   offset_edges = TRUE,
   shadow_intensity = .99,
   sunangle = 135,
@@ -115,33 +128,13 @@ rayshader::plot_gg(
 # 10. RENDER
 #------------
 rayshader::render_highquality(
-  filename = "default.png",
+  filename = "Ipatinga.png",
   preview = TRUE,
-  width = 1366,
-  height = 768,
+  width = 1280,
+  height = 720,
   parallel = TRUE,
   interactive = FALSE
 )
 
 
-# Regiões Geográficas Imediatas Minas Gerais
 
-# Ipatinga                      310024
-# Caratinga                     310025
-# João Monlevade                310026
-
-# Belo Horizonte                310001
-# Sete Lagoas                   310002
-# Santa Bárbara - Ouro Preto    310003
-# Curvelo                       310004
-# Itabira                       310005
-
-# Governador Valadares          310020
-# Guanhães                      310021
-
-# Juiz de Fora                  310027
-# Manhuaçu                      310028
-# Viçosa                        310033
-
-# Barbacena                     310037
-# São João del-Rei              310039
