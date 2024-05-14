@@ -39,22 +39,23 @@ Chroma.js Color Pallete Helper: https://andrewringler.github.io/palettes/#/9|s|0
 Regiões Geográficas Imediatas Minas Gerais
 Fonte: https://pt.wikipedia.org/wiki/Lista_de_regi%C3%B5es_geogr%C3%A1ficas_intermedi%C3%A1rias_e_imediatas_de_Minas_Gerais
 
-Ipatinga                      310024
-Caratinga                     310025
-João Monlevade                310026
 
-Belo Horizonte                310001
-Sete Lagoas                   310002
-Santa Bárbara - Ouro Preto    310003
-Curvelo                       310004
-Itabira                       310005
 
-Governador Valadares          310020
-Guanhães                      310021
 
-Juiz de Fora                  310027
-Manhuaçu                      310028
-Viçosa                        310033
-
-Barbacena                     310037
-São João del-Rei              310039
+Região Geográfica Imediata|Código
+:---|:---
+Ipatinga|310024
+Caratinga|310025
+João Monlevade|310026
+Belo Horizonte|310001
+Sete Lagoas|310002
+Santa Bárbara - Ouro Preto|310003
+Curvelo|310004
+Itabira|310005
+Governador Valadares|310020
+Guanhães|310021
+Juiz de Fora|310027
+Manhuaçu|310028
+Viçosa|310033
+Barbacena|310037
+São João del-Rei|310039
