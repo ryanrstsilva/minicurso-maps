@@ -23,8 +23,16 @@ Instalação da extensão do R para o Visual Studio Code
 
 1. Copernicus Global Land Service
 2. NASA Earthdata
+3. Kontur
 
 ## Código
+
+
+### COLORS
+Color Designer: https://colordesigner.io
+Chroma.js Color Pallete Helper: https://andrewringler.github.io/palettes/#/9|s|00429d,96ffea,ffffe0||1|1|0|
+
+
 ### GGPLOT2
 
 ## Outros
