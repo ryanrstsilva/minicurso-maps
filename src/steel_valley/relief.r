@@ -1,18 +1,16 @@
 setwd("./maps/mg")
 
-# devtools::install_github("h-a-graham/rayvista", dependencies = TRUE)
-
 packages <- c("rayvista", "elevatr", "rayshader", "sf", "geobr")
 invisible(lapply(packages, library, character.only = TRUE))
 
 crs <- "+proj=longlat +datum=WGS84 +no_defs"
 
-mg_sf <- sf::st_transform(geobr::read_state(code_state = 31), crs)
+steel_valley_sf <- sf::st_transform(geobr::read_state(code_state = 31), crs)
 
 map_elevation <- elevatr::get_elev_raster(locations = mg_sf, z = 7, clip = "locations")
 names(map_elevation) <- "elevation"
 
-mg_dem <- rayvista::plot_3d_vista(
+mg_demo <- rayvista::plot_3d_vista(
   dem = map_elevation$elevation,
   overlay_detail = 11,
   zscale = 10,

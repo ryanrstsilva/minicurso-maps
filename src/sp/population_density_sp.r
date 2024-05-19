@@ -1,5 +1,5 @@
 # Diretório de Trabalho
-setwd("./maps/mg")
+setwd("./maps/sp")
 
 # Carregamento dos Pacotes
 packages <- c("tidyverse", "sf", "geobr", "stars", "rayshader", "magick")
@@ -9,7 +9,7 @@ invisible(lapply(packages, library, character.only = TRUE))
 data <- sf::st_read("../../data/kontur_population_BR_20231101.gpkg")
 
 # Obtendo informações da região de interesse
-map_borders <- sf::st_transform(geobr::read_state(code_state = 31), sf::st_crs(data))
+map_borders <- sf::st_transform(geobr::read_state(code_state = 35), sf::st_crs(data))
 map_borders |> ggplot() + geom_sf()
 
 # Extrair do Dataset apenas os dados da região de interesse
@@ -54,54 +54,54 @@ matrix <- matrix(
 )
 
 # Paleta de Cores
-cols <- rev(c("#ef5000", "#ed791b", "#eb9a3c", "#eab661"))
-texture <- colorRampPalette(cols)(256)
+cols <- c("#1d96ff", "#3863f9", "#6c00d7")
+texture <- colorRampPalette(cols, bias = 64)(256)
 
 # RAYSHADER
 matrix |>
   rayshader::height_shade(texture = texture) |>
   rayshader::plot_3d(
     heightmap = matrix,
-    zscale = 100 / 5,
+    zscale = 200 / 5,
     solid = FALSE,
     shadowdepth = 0
   )
 
-render_camera(theta = 0, phi = 45, zoom = .7)
+render_camera(theta = 0, phi = 40, zoom = .8)
 
 rayshader::render_highquality(
-  filename = "population_density_mg.png",
+  filename = "population_density_sp.png",
   interactive = FALSE,
   lightdirection = 280,
   lightaltitude = c(20, 80),
-  lightcolor = c(cols[1], "white"),
-  lightintensity = c(500, 100),
+  lightcolor = c("#61c0ff", "white"),
+  lightintensity = c(600, 100),
   samples = 128,
-  width = 3600,
-  height = 3600
+  width = 3240,
+  height = 3240
 )
 
 # ANNOTATE MAP
 #--------------
 
-map <- magick::image_read("./population_density_mg.png")
+map <- magick::image_read("./population_density_sp.png")
 
 map |>
   magick::image_annotate(
     "Densidade Populacional",
-    color = alpha(cols[4], .7),
+    color = alpha(cols[2], .7),
     size = 125,
     gravity = "northwest",
     location = "+235+300",
-    font = "Georgia"
+    font = "Bahnschrift"
   ) |>
   magick::image_annotate(
-    "Minas Gerais",
-    color = cols[4],
+    "São Paulo",
+    color = cols[2],
     size = 250,
     gravity = "northwest",
-    location = "+200+400",
-    font = "Georgia"
+    location = "+375+425",
+    font = "Bahnschrift"
   ) |>
   magick::image_annotate(
     "©2024 Ryan R. S. Silva",
@@ -109,7 +109,7 @@ map |>
     color = alpha("black", .75),
     size = 40,
     gravity = "southeast",
-    location = "+425+675",
+    location = "+375+675",
   ) |>
   magick::image_annotate(
     "Data: Kontur: Population Density for 400m H3 Hexagons",
@@ -117,6 +117,6 @@ map |>
     color = alpha("black", .75),
     size = 40,
     gravity = "southeast",
-    location = "+425+625",
+    location = "+300+625",
   ) |>
   image_write("annotated_population_density_mg.png")

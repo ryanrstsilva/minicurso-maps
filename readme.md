@@ -32,6 +32,7 @@ Instalação da extensão do R para o Visual Studio Code
 Color Designer: https://colordesigner.io
 Chroma.js Color Pallete Helper: https://andrewringler.github.io/palettes/#/9|s|00429d,96ffea,ffffe0||1|1|0|
 
+[Preparação do Ambiente](./maps/mg/annotated_population_density_mg.png)
 
 ### GGPLOT2
 
