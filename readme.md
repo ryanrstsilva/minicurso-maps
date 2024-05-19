@@ -1,23 +1,12 @@
-# Teste
+# Produção de Mapas com R
 
-## Preparação do Ambiente
+A linguagem R é uma ferramenta poderosa para a geração de mapas e visualização de dados geoespaciais. Com suas bibliotecas robustas, como ggplot2 e rayshader, os usuários podem criar representações gráficas impressionantes a partir de dados raster e vetoriais. O R oferece uma abordagem flexível e personalizável para a criação de mapas 2D e 3D, permitindo que os analistas explorem e comuniquem informações geográficas de maneira eficaz. Seja você um cientista de dados, pesquisador ou entusiasta de geoinformação, o R é uma escolha excelente para transformar dados brutos em visualizações informativas e envolventes.
 
-1. Download e Instalação do VSCode
-    https://code.visualstudio.com/
-    ![VSCode Download](/tutorial/vscode.jpg)
-
-
-2. O download do R pode ser feito no link abaixo:
-    https://cloud.r-project.org/bin/windows/base/
-    ![R Download](/tutorial/r.jpg)
+1. [Preparação do Ambiente](./setup.md)
+2. [Fonte de Dados](./source.md)
+3. [Script](./script.md)
 
 
-```r
-install.packages("languageserver")
-```
-
-Instalação da extensão do R para o Visual Studio Code
-    ![VSCode R Extention Download](/tutorial/r_extension.jpg)
 
 ## Obter dados de fonte
 
@@ -29,12 +18,9 @@ Instalação da extensão do R para o Visual Studio Code
 
 
 ### COLORS
-Color Designer: https://colordesigner.io
+
 Chroma.js Color Pallete Helper: https://andrewringler.github.io/palettes/#/9|s|00429d,96ffea,ffffe0||1|1|0|
 
-[Preparação do Ambiente](./maps/mg/annotated_population_density_mg.png)
-
-### GGPLOT2
 
 ## Outros
 Regiões Geográficas Imediatas Minas Gerais
