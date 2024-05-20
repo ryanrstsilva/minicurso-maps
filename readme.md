@@ -17,7 +17,7 @@ A linguagem R é uma ferramenta poderosa para a geração de mapas e visualizaç
 
 
 ## Regiões Geográficas Imediatas Minas Gerais
-![Regiões Geográficas Imediatas Minas Gerais](/tutorial/Regiões_Geográficas_do_Estado_de_Minas_Gerais.png)
+![Regiões Geográficas Imediatas Minas Gerais](/tutorial/Regioes_Geograficas_do_Estado_de_Minas_Gerais.png)
 
 
 Fonte: https://pt.wikipedia.org/wiki/Lista_de_regi%C3%B5es_geogr%C3%A1ficas_intermedi%C3%A1rias_e_imediatas_de_Minas_Gerais
