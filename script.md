@@ -13,6 +13,7 @@ setwd("./")
 packages <- c("tidyverse", "terra", "geobr", "sf", "rayshader", "magick")
 invisible(lapply(packages, library, character.only = TRUE))
 ```
+![R Packages](./tutorial/minicurso_mapsr_packages.png)
 
 Podemos então carregar os arquivos da nossa fonte de dados, lebrando que podemos passar o caminho completo, ou a partir do nosso diretório de trabalho.
 
