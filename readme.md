@@ -14,16 +14,12 @@ A linguagem R é uma ferramenta poderosa para a geração de mapas e visualizaç
 2. NASA Earthdata
 3. Kontur
 
-## Código
 
 
-### COLORS
+## Regiões Geográficas Imediatas Minas Gerais
+![Regiões Geográficas Imediatas Minas Gerais](/tutorial/Regiões_Geográficas_do_Estado_de_Minas_Gerais.png)
 
-Chroma.js Color Pallete Helper: https://andrewringler.github.io/palettes/#/9|s|00429d,96ffea,ffffe0||1|1|0|
 
-
-## Outros
-Regiões Geográficas Imediatas Minas Gerais
 Fonte: https://pt.wikipedia.org/wiki/Lista_de_regi%C3%B5es_geogr%C3%A1ficas_intermedi%C3%A1rias_e_imediatas_de_Minas_Gerais
 
 
