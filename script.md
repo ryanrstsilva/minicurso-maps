@@ -78,6 +78,7 @@ texture <- colorRampPalette(cols)(256)
 
 ### Plote
 
+Iniciamos o Plot chamando a função ggplot passando nosso Dataframe como parâmetro. Em seguida, chamamos a função geom_raster para especificar como devem ser interpretados os dados do nosso Dataframe. Na função scale_fill_gradientn, definimos informações da legenda como nome, cores e escala. Na função coord_sf definimos o CRS que deve ser utilizado. E nas funções theme_minimal() e theme, definimos as configurações de formatação do mapa.
 ``` r
 p <- ggplot2::ggplot(forest_cover_df) +
   ggplot2::geom_raster(ggplot2::aes(x = x, y = y, fill = percent_cover)) +
@@ -147,8 +148,9 @@ rayshader::render_highquality(
 
 ## Anotações no Mapa
 
-Para finalizar realizamos algumas anotações, normalmente o titulo do mapa, o autor, e qual a fonte de dados utilizada. Para isso usamos o pacote magick.
+A fase final desse tutorial é a de adicionar marcadores e anotações no mapa. Normalmente queremos adicionar um título para o mapa, o nome do autor, e qual a fonte de dados utilizada. O magick é um pacote R para processamento de imagens, que podemos utilizar para essa função.
 
+Primeiro, fazemos a leitura da imagem.
 ```r
 map <- magick::image_read("./relief_mg.png")
 ```
