@@ -1,8 +1,8 @@
-# Código
+# Elaboração do Script
 
-## Setup e Carregamento dos Dados
+## Configurações Iniciais e Carregamento de Dados
 
-O primeiro passo é definir o diretório de trabalho e realizar o carregamento dos pacotes que serão usados.
+O primeiro passo é definir o diretório de trabalho. Comumente, o diretório raiz do projeto é escolhido para essa função. Em seguida, realizamos o carregamento dos pacotes que serão utilizados.
 
 ```r
 # Diretório de Trabalho
@@ -16,8 +16,13 @@ invisible(lapply(packages, library, character.only = TRUE))
 Podemos então carregar os arquivos da nossa fonte de dados, lebrando que podemos passar o caminho completo, ou a partir do nosso diretório de trabalho.
 
 ```r
-raster_files <- "data/W060N00_PROBAV_LC100_global_v3.0.1_2019-nrt_Tree-CoverFraction-layer_EPSG-4326.tif"
-forest_cover <- terra::rast(raster_files)
+# Carrega os arquivos do Dataset
+raster_files <- c(
+    "./data/W060N00_PROBAV_LC100_global_v3.0.1_2019-nrt_Tree-CoverFraction-layer_EPSG-4326.tif", #nolint
+    "./data/W060S20_PROBAV_LC100_global_v3.0.1_2019-nrt_Tree-CoverFraction-layer_EPSG-4326.tif"  #nolint
+)
+forest_cover <- lapply(raster_files, terra::rast)
+forest_cover <- do.call(terra::mosaic, forest_cover)
 ```
 
 Agora precisamos obter os dados de fronteira da região à qual estaremos criando o mapa. O pacote para realizar essa tarefa varia de acordo com o local, no nosso caso, como estaremos criando mapas de regiões do brasil, usamos o pacote geobr. Outra coisa que vale mencionar é o Sistema de Refêrencia de Coordenadas. O geobr usa o SIRGAS2000 que é formato padrão utilizado no Brasil, mas nossa fonte de dados usa o WGS84, por isso é necessário realizar a conversão.
@@ -26,13 +31,10 @@ Agora precisamos obter os dados de fronteira da região à qual estaremos criand
 # Sistema de Referências de Coordenadas
 crs <- "+proj=longlat +datum=WGS84 +no_defs"
 
-# Obter informações e fronteira dos municípios
-code_cities <- c(3119401, 3131307, 3168705, 3158953)
-list_cities <- lapply(code_cities, function(code) {
-  sf::st_transform(geobr::read_municipality(code_muni = code), crs)
-})
-map_borders <- do.call(rbind, list_cities)
-map_borders |> ggplot() + geom_sf()
+# Informações de Fronteira e Metadados
+borders <- sf::st_transform(geobr::read_immediate_region(code_immediate = "310024"), crs) #nolint
+borders |> ggplot() + geom_sf
+
 ``` 
 
 Transformamos os dados de fronteira em um SpatVector, que é um tipo para representar dados espaciais vetoriais, para então realizar a operação de filtro.
@@ -114,7 +116,17 @@ p <- ggplot2::ggplot(forest_cover_df) +
 
 ## Rayshader
 
+O Rayshader é um pacote de código aberto para produzir visualizações de dados 2D e 3D em R. Ele utiliza matrizes de dados de elevação e uma combinação de traçado de raios, algoritmos de hillshading e sobreposições para gerar mapas 2D e 3D impressionantes.
+
+ 
+A primeira função do pacote rayshader que vamos usar é a plot_gg(). Alguns dos parâmetros 
+
+
 ```r
+w <- ncol(forest_cover_map)
+h <- nrow(forest_cover_map)
+
+# Plota um objeto ggplot2 em 3D
 rayshader::plot_gg(
   ggobj = p,
   multicore = TRUE,
@@ -123,16 +135,17 @@ rayshader::plot_gg(
   windowsize = c(1280, 720),
   offset_edges = TRUE,
   shadow_intensity = .99,
-  sunangle = 135,
   phi = 85,
   theta = 0,
   zoom = .5,
 )
 
+# Posiciona a Câmera
 rayshader::render_camera(theta = 0, phi = 85, zoom = .5)
 ```
 
 ```r
+# Realiza a rendenrização de uma imagem de alta qualidade com efeitos de iluminação.
 rayshader::render_highquality(
   filename = "Ipatinga.png",
   lightintensity = 600,
@@ -147,14 +160,14 @@ rayshader::render_highquality(
 ```
 
 ## Anotações no Mapa
+A fase final do tutorial consiste em adicionar marcadores e anotações ao mapa. Normalmente, o que se deseja adicionar é um título para o mapa, o nome do autor e a fonte de dados utilizada. O magick é um pacote do R para processamento de imagens que podemos utilizar para essa finalidade.
 
-A fase final desse tutorial é a de adicionar marcadores e anotações no mapa. Normalmente queremos adicionar um título para o mapa, o nome do autor, e qual a fonte de dados utilizada. O magick é um pacote R para processamento de imagens, que podemos utilizar para essa função.
-
-Primeiro, fazemos a leitura da imagem.
+Primeiro, fazemos a leitura da imagem:
 ```r
-map <- magick::image_read("./relief_mg.png")
+map <- magick::image_read("forest_cover.png")
 ```
 
+Em seguida, podemos realizar as anotações usando a função image_annotate(). Nela, podemos definir, além do texto, a cor, o tamanho, a posição, a fonte, etc. Por fim, usamos a função image_write() para salvar a imagem final.
 ```r
 map |>
   magick::image_annotate(
@@ -189,6 +202,6 @@ map |>
     gravity = "southwest",
     location = "+50+30",
   ) |>
-  image_write("annotated_relief_mg.png")
+  image_write("annotated_forest_cover.png")
 ```
 
