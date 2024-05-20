@@ -39,7 +39,11 @@ borders |> ggplot() + geom_sf
 
 Transformamos os dados de fronteira em um SpatVector, que é um tipo para representar dados espaciais vetoriais, para então realizar a operação de filtro.
 ```r
+# Converte os dados de fronteira de sf para SpatVector
 borders_vect <- terra::vect(borders)
+
+# Filtra a região do Mapa definido pelo objeto anterior
+forest_cover_map <- terra::crop(forest_cover, borders_vect, snap = "in", mask = TRUE, overwrite = TRUE)
 ```
 
 Usando o pacote terra, filtramos a região de interrese usando a função crop.
